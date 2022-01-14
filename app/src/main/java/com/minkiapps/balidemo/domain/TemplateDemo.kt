@@ -4,6 +4,10 @@ import android.os.Parcelable
 import androidx.annotation.ColorInt
 import kotlinx.android.parcel.Parcelize
 
+enum class TemplateIndex {
+    ZERO,ONE,TWO
+}
+
 interface TemplateDemo : Parcelable
 
 @Parcelize

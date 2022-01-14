@@ -11,9 +11,8 @@ import android.os.IBinder
 import androidx.core.content.ContextCompat
 import com.google.gson.GsonBuilder
 import com.minkiapps.balidemo.App.Companion.NOTIFICATION_CHANNEL_ID
-import com.minkiapps.balidemo.domain.TemplateOne
-import com.minkiapps.balidemo.domain.TemplateTwo
-import com.minkiapps.balidemo.domain.TemplateZero
+import com.minkiapps.balidemo.domain.*
+import com.minkiapps.balidemo.util.isHwFoldAbleDevice
 
 class BaliDemoService : Service() {
 
@@ -22,32 +21,17 @@ class BaliDemoService : Service() {
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         when (intent.action) {
             Actions.TEMPLATE0.name -> {
-                val bundle = Bundle()
-                val resJson = gson.toJson(createTemplateZero())
-                bundle.putString("res_id", resJson)
-                bundle.putParcelable("extra_icon", Icon.createWithResource(this, R.drawable.ic_ahead))
-                bundle.putInt("notification_index", 0)
+                val bundle = createBundle(createTemplateZero(), TemplateIndex.ZERO, R.drawable.ic_ahead)
                 startForeground(1, createNotification(bundle,
                     "Navigation", "Showing you in which direction you should go next on the cover screen."))
             }
             Actions.TEMPLATE1.name -> {
-                val bundle = Bundle()
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                    val resJson = gson.toJson(createTemplateOne())
-                    bundle.putString("res_id", resJson)
-                    bundle.putInt("notification_index", 1)
-                }
+                val bundle = createBundle(createTemplateOne(), TemplateIndex.ONE, R.drawable.taxi)
                 startForeground(2, createNotification(bundle,
-                    "Food Order", "Showing you the status of the food order."))
+                    "Taxi Order", "Showing you the status of the taxi."))
             }
             Actions.TEMPLATE2.name -> {
-                val bundle = Bundle()
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                    val resJson = gson.toJson(createTemplateTwo())
-                    bundle.putString("res_id", resJson)
-                    bundle.putInt("notification_index", 2)
-                    bundle.putParcelable("extra_icon", Icon.createWithResource(this, R.drawable.step))
-                }
+                val bundle = createBundle(createTemplateTwo(), TemplateIndex.TWO, R.drawable.step)
                 startForeground(3, createNotification(bundle,
                     "Steps Counter",
                     "Daily steps and meters are count and displayed on the cover screen."))
@@ -55,6 +39,21 @@ class BaliDemoService : Service() {
             Actions.STOP.name -> stopService()
         }
         return START_STICKY
+    }
+
+    private fun createBundle(templateDemo: TemplateDemo,
+                             templateIndex: TemplateIndex,
+                             iconRes : Int): Bundle {
+        val bundle = Bundle()
+        if(isHwFoldAbleDevice()) {
+            return bundle
+        }
+
+        val resJson = gson.toJson(templateDemo)
+        bundle.putString("res_id", resJson)
+        bundle.putInt("notification_index", templateIndex.ordinal)
+        bundle.putParcelable("extra_icon", Icon.createWithResource(this, iconRes))
+        return bundle
     }
 
     override fun onBind(intent: Intent): IBinder? {
