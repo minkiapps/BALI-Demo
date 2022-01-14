@@ -45,7 +45,7 @@ class BaliDemoService : Service() {
                              templateIndex: TemplateIndex,
                              iconRes : Int): Bundle {
         val bundle = Bundle()
-        if(isHwFoldAbleDevice()) {
+        if(!isHwFoldAbleDevice()) {
             return bundle
         }
 

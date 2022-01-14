@@ -9,7 +9,7 @@ fun Context.isHwFoldAbleDevice(): Boolean {
         return true
     }
     if (device == "HWBAL" || device == "unknownQTZ") {
-        return false
+        return true
     }
     return applicationContext.packageManager.hasSystemFeature("com.huawei.hardware.sensor.posture")
 }
