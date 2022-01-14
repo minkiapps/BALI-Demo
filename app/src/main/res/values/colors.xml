@@ -6,4 +6,6 @@
 
     <color name="progress_color">#ff16A7FF</color>
     <color name="progress_bg_color">#ff2D2F2E</color>
+
+    <color name="grey">#aaaaaa</color>
 </resources>

@@ -4,6 +4,7 @@ import android.app.Notification
 import android.app.PendingIntent
 import android.app.Service
 import android.content.Intent
+import android.graphics.Color
 import android.graphics.drawable.Icon
 import android.os.Build
 import android.os.Bundle
@@ -100,10 +101,30 @@ class BaliDemoService : Service() {
 
     private fun createTemplateOne() : TemplateOne {
         return TemplateOne(
-            templateTitle = "Coffee Latte",
+            templateTitle = "Driver on the way",
             titleColor = 0xFFFC3E1B.toInt(),
-            templateContent = "Is in the making",
-            templateSecondly = "Approx. waiting time: 2min"
+            templateContentFirst = TemplateContent(
+                oriContent = "BD51-SMR",
+                oriContentColor = Color.WHITE
+            ),
+            templateContentSecondly = TemplateContent(
+                oriContent = "Audi A3 - White",
+                oriContentColor = ContextCompat.getColor(this, R.color.grey),
+            ),
+            templateBottom = TemplateContent(
+                oriContent = "Distance: 2km, 2min",
+                oriContentColor = ContextCompat.getColor(this, R.color.grey),
+                disContents = listOf(
+                    DisContent(
+                        disContent = "2km",
+                        disContentColor = Color.WHITE
+                    ),
+                    DisContent(
+                        disContent = "2min",
+                        disContentColor = Color.WHITE
+                    )
+                )
+            )
         )
     }
 
