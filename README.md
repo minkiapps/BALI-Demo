@@ -15,7 +15,7 @@ Demo code to show different ongoing notification types on the Huawei P50 Pocket 
 >notificationBuilder.setExtras(bundle)<br>
 
 
-#### Template 0 (Navigation Scenario):
+### Template 0 (Navigation Scenario):
 ![gif_navigation](https://user-images.githubusercontent.com/52449229/149536071-3e9dbc3f-eeaf-4a1e-a377-80f8c3082be4.gif)
 
 ```
@@ -31,7 +31,7 @@ Demo code to show different ongoing notification types on the Huawei P50 Pocket 
 
 ![navigation](https://user-images.githubusercontent.com/52449229/149678273-a504ef66-d0fa-4f18-9777-b6285e066f30.png)
 
-#### Template 1 (Taxi Order Scenario):
+### Template 1 (Taxi Order Scenario):
 ![gif_taxi](https://user-images.githubusercontent.com/52449229/149534618-e1f04693-f996-4ffb-bea8-873db6bce493.gif)
 
 ```
@@ -70,7 +70,7 @@ Demo code to show different ongoing notification types on the Huawei P50 Pocket 
 Icon is from Freepik:
 <a href="https://www.flaticon.com/free-icons/taxi" title="taxi icons">Taxi icons created by Freepik - Flaticon</a>
 
-#### Template 2 (Sport Scenario):
+### Template 2 (Sport Scenario):
 ![gif_steps](https://user-images.githubusercontent.com/52449229/149535689-b4148569-8875-4397-bae4-73f17ca2d04e.gif)
 
 ```
