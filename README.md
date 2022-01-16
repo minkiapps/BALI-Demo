@@ -90,7 +90,7 @@ Icon is from Freepik:
 
 ![steps_counter](https://user-images.githubusercontent.com/52449229/149678353-d88ae076-5348-4f7a-b94c-90c6572b35c4.png)
 
-Icon is from Frrepik:
+Icon is from Freepik:
 <a href="https://www.flaticon.com/free-icons/step" title="step icons">Step icons created by Freepik - Flaticon</a>
 
 ### How to make screenshot from external screen
