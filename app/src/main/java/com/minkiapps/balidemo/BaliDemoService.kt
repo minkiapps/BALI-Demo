@@ -78,6 +78,7 @@ class BaliDemoService : Service() {
         }
 
         val resJson = gson.toJson(templateDemo)
+        Timber.d("Json for bundle: $resJson")
         bundle.putString("res_id", resJson)
         bundle.putInt("notification_index", templateIndex.ordinal)
         bundle.putParcelable("extra_icon", Icon.createWithResource(this, iconRes))
