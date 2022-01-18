@@ -15,12 +15,8 @@ import com.minkiapps.balidemo.App.Companion.NOTIFICATION_CHANNEL_ID
 import com.minkiapps.balidemo.domain.*
 import android.app.NotificationManager
 import android.content.Context
-import com.huawei.android.fsm.HwFoldScreenManagerEx.Companion.EXTRA_FOLD_STATE
-import com.huawei.android.fsm.HwFoldScreenManagerEx.Companion.FOLD_STATE_FOLDED
+import com.huawei.android.fsm.*
 import com.huawei.android.fsm.HwFoldScreenManagerEx.FoldableStateListener
-import com.huawei.android.fsm.isHwFoldAbleDevice
-import com.huawei.android.fsm.registerFoldStateListener
-import com.huawei.android.fsm.unregisterFoldableState
 import timber.log.Timber
 
 class BaliDemoService : Service() {

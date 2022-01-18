@@ -2,16 +2,14 @@ package com.huawei.android.fsm
 
 import android.os.Bundle
 
+const val EXTRA_FOLD_STATE = "fold_state"
+
+const val FOLD_STATE_UNKNOWN = 0
+const val FOLD_STATE_EXPANDED = 1
+const val FOLD_STATE_FOLDED = 2
+const val FOLD_STATE_HALF_FOLDED = 3
+
 class HwFoldScreenManagerEx {
-
-    companion object {
-        const val EXTRA_FOLD_STATE = "fold_state"
-
-        const val FOLD_STATE_UNKNOWN = 0
-        const val FOLD_STATE_EXPANDED = 1
-        const val FOLD_STATE_FOLDED = 2
-        const val FOLD_STATE_HALF_FOLDED = 3
-    }
 
     /**
      * val foldState: Int = bundle.getInt("fold_state", 0)
