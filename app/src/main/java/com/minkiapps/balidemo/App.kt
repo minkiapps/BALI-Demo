@@ -6,11 +6,14 @@ import android.app.NotificationManager
 import android.content.Context
 import android.graphics.Color
 import android.os.Build
+import timber.log.Timber
 
 class App : Application(){
 
     override fun onCreate() {
         super.onCreate()
+
+        Timber.plant(Timber.DebugTree())
 
         // depending on the Android API that we're dealing with we will have
         // to use a specific method to create the notification

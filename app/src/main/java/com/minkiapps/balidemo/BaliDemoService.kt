@@ -13,29 +13,56 @@ import androidx.core.content.ContextCompat
 import com.google.gson.GsonBuilder
 import com.minkiapps.balidemo.App.Companion.NOTIFICATION_CHANNEL_ID
 import com.minkiapps.balidemo.domain.*
-import com.minkiapps.balidemo.util.isHwFoldAbleDevice
+import android.app.NotificationManager
+import android.content.Context
+import com.huawei.android.fsm.HwFoldScreenManagerEx.Companion.EXTRA_FOLD_STATE
+import com.huawei.android.fsm.HwFoldScreenManagerEx.Companion.FOLD_STATE_FOLDED
+import com.huawei.android.fsm.HwFoldScreenManagerEx.FoldableStateListener
+import com.huawei.android.fsm.isHwFoldAbleDevice
+import com.huawei.android.fsm.registerFoldStateListener
+import com.huawei.android.fsm.unregisterFoldableState
+import timber.log.Timber
 
 class BaliDemoService : Service() {
 
     private val gson = GsonBuilder().create()
 
+    private val notificationManager : NotificationManager by lazy {
+        getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+    }
+
+    private var foldableStateListener : FoldableStateListener? = null
+
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         when (intent.action) {
             Actions.TEMPLATE0.name -> {
                 val bundle = createBundle(createTemplateZero(), TemplateIndex.ZERO, R.drawable.ic_ahead)
-                startForeground(1, createNotification(bundle,
-                    "Navigation", "Showing you in which direction you should go next on the cover screen."))
+                val notification = createNotification(
+                    bundle,
+                    "Navigation",
+                    "Showing you in which direction you should go next on the cover screen."
+                )
+                startForeground(NOTIFICATION_ID, notification)
+                registerFoldableListener(notification)
             }
             Actions.TEMPLATE1.name -> {
                 val bundle = createBundle(createTemplateOne(), TemplateIndex.ONE, R.drawable.taxi)
-                startForeground(2, createNotification(bundle,
-                    "Taxi Order", "Showing you the status of the taxi."))
+                val notification = createNotification(
+                    bundle,
+                    "Taxi Order", "Showing you the status of the taxi."
+                )
+                startForeground(NOTIFICATION_ID, notification)
+                registerFoldableListener(notification)
             }
             Actions.TEMPLATE2.name -> {
                 val bundle = createBundle(createTemplateTwo(), TemplateIndex.TWO, R.drawable.step)
-                startForeground(3, createNotification(bundle,
+                val notification = createNotification(
+                    bundle,
                     "Steps Counter",
-                    "Daily steps and meters are count and displayed on the cover screen."))
+                    "Daily steps and meters are count and displayed on the cover screen."
+                )
+                startForeground(NOTIFICATION_ID, notification)
+                registerFoldableListener(notification)
             }
             Actions.STOP.name -> stopService()
         }
@@ -57,11 +84,38 @@ class BaliDemoService : Service() {
         return bundle
     }
 
+    private fun registerFoldableListener(notification : Notification) {
+        if(!isHwFoldAbleDevice())
+            return
+
+        foldableStateListener?.let {
+            unregisterFoldableState(it)
+        }
+
+        val listener = object : FoldableStateListener {
+            override fun onStateChange(bundle: Bundle?) {
+                val foldableState : Int = bundle?.getInt(EXTRA_FOLD_STATE, 0) ?: 0
+
+                Timber.d("Foldable state changed: $foldableState")
+
+                if(foldableState == FOLD_STATE_FOLDED) {
+                    notificationManager.notify(NOTIFICATION_ID, notification)
+                }
+            }
+        }
+        registerFoldStateListener(listener)
+
+        this.foldableStateListener = listener
+    }
+
     override fun onBind(intent: Intent): IBinder? {
         return null
     }
 
     private fun stopService() {
+        foldableStateListener?.let {
+            unregisterFoldableState(it)
+        }
         stopForeground(true)
         stopSelf()
     }
@@ -138,5 +192,9 @@ class BaliDemoService : Service() {
             progressColor = ContextCompat.getColor(this, R.color.progress_color),
             progressBgColor = ContextCompat.getColor(this, R.color.progress_bg_color)
         )
+    }
+
+    companion object {
+        private const val NOTIFICATION_ID = 1
     }
 }
