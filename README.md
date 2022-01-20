@@ -93,6 +93,13 @@ Icon is from Freepik:
 Icon is from Freepik:
 <a href="https://www.flaticon.com/free-icons/step" title="step icons">Step icons created by Freepik - Flaticon</a>
 
+### Proguard
+Make sure to exclude the JSON model object and `com.huawei.android.fsm` classes
+```
+-keep class com.minkiapps.balidemo.domain.**{*;}
+-keep class com.huawei.android.fsm.**{*;}
+```
+
 ### How to make screenshot from external screen
 >adb shell screencap -p -d 1 /sdcard/sc.png</br>
 >adb pull /sdcard/sc.png ~/Desktop</br>
