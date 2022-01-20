@@ -93,6 +93,20 @@ Icon is from Freepik:
 Icon is from Freepik:
 <a href="https://www.flaticon.com/free-icons/step" title="step icons">Step icons created by Freepik - Flaticon</a>
 
+#### Make sure to update the notification every time the phone is folded
+```
+val listener = object : FoldableStateListener {
+    override fun onStateChange(bundle: Bundle?) {
+        val foldableState : Int = bundle?.getInt(EXTRA_FOLD_STATE, 0) ?: 0
+
+        if(foldableState == FOLD_STATE_FOLDED) {
+            notificationManager.notify(NOTIFICATION_ID, notification)
+        }
+    }
+}
+registerFoldStateListener(listener)
+```
+
 ### Proguard
 Make sure to exclude the JSON model object and `com.huawei.android.fsm` classes
 ```
